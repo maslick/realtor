@@ -1,5 +1,6 @@
 # =realtor=
-real estate broker machine learning model using [Klassy](https://github.com/maslick/klassy)
+ * contains a real estate broker regression model
+ * uses [Klassy](https://github.com/maslick/klassy) weka wrapper
 
 See [this article](https://www.ibm.com/developerworks/library/os-weka1/index.html) for more details
 
@@ -28,4 +29,5 @@ House house = House.builder()
         .build();
 
 String klass = model.classify(house);
+Double cost = Double.valueOf(klass);  // = 222921 dollars
 ```
