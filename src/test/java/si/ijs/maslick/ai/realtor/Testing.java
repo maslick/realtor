@@ -13,21 +13,6 @@ import java.io.InputStreamReader;
 public class Testing {
 
     @Test
-    public void testGeneratedModel() {
-        Houser model = new Houser(new ContextLoader());
-        House house = House.builder()
-                .houseSize(2983)
-                .lotSize(9365)
-                .bedrooms(5)
-                .granite(0)
-                .bathroom(1)
-                .build();
-
-        String klass = model.classify(house);
-        Assert.assertEquals(230000, Double.valueOf(klass), 8000);
-    }
-
-    @Test
     public void trainModel() throws Exception {
         //load data
         BufferedReader br = new BufferedReader(new InputStreamReader(new ContextLoader().getFile("house.arff"), "UTF-8"));
@@ -43,5 +28,20 @@ public class Testing {
         Instance myHouse = data.lastInstance();
         double price = model.classifyInstance(myHouse);
         System.out.println("My house (" + myHouse + "): " + price);
+    }
+
+    @Test
+    public void testGeneratedModel() {
+        HouseKlassyFire model = new HouseKlassyFire(new ContextLoader());
+        House house = House.builder()
+                .houseSize(2983)
+                .lotSize(9365)
+                .bedrooms(5)
+                .granite(0)
+                .bathroom(1)
+                .build();
+
+        String klass = model.classify(house);
+        Assert.assertEquals(230000, Double.valueOf(klass), 8000);
     }
 }

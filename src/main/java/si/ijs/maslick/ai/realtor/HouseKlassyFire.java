@@ -9,11 +9,13 @@ import weka.core.Instance;
 import java.util.ArrayList;
 
 import static com.maslick.ai.klassy.classifier.ClassifierType.REGRESSION;
+import static si.ijs.maslick.ai.realtor.FeatureNames.*;
+import static si.ijs.maslick.ai.realtor.FeatureHelper.*;
 
 
-public class Houser extends AbstractClassifier<House> {
+public class HouseKlassyFire extends AbstractClassifier<House> {
 
-    public Houser(IFileLoader fileLoader) {
+    public HouseKlassyFire(IFileLoader fileLoader) {
         super(fileLoader);
         MODEL = "house.model";         // model file name without path
         classifierType = REGRESSION;   // CLASSIFICATION or REGRESSION
@@ -28,12 +30,12 @@ public class Houser extends AbstractClassifier<House> {
         // Weka doesn't take attribute names into account, but their order!
         // However, for clarity one should specify attribute names like below
 
-        atts.add(new Attribute("houseSize",    0));
-        atts.add(new Attribute("lotSize",      1));
-        atts.add(new Attribute("bedrooms",     2));
-        atts.add(new Attribute("granite",      3));
-        atts.add(new Attribute("bathroom",     4));
-        atts.add(new Attribute("sellingPrice", 5));    // class attribute (classIndex=5)
+        atts.add(new Attribute(HOUSE_SIZE,          0));
+        atts.add(new Attribute(LOT_SIZE,            1));
+        atts.add(new Attribute(NUMBER_OF_BEDROOMS,  2));
+        atts.add(new Attribute(GRANITE,             3));
+        atts.add(new Attribute(NUMBER_OF_BATHROOMS, 4));
+        atts.add(new Attribute(SELLING_PRICE,       5));    // class attribute (classIndex=5)
 
         return atts;
     }
@@ -43,11 +45,11 @@ public class Houser extends AbstractClassifier<House> {
         // valid instance size is 5 or 6 (with class attribute)
         Instance instance = new DenseInstance(5);
 
-        instance.setValue(attributes.get(0), data.getHouseSize());
-        instance.setValue(attributes.get(1), data.getLotSize());
-        instance.setValue(attributes.get(2), data.getBedrooms());
-        instance.setValue(attributes.get(3), data.getGranite());
-        instance.setValue(attributes.get(4), data.getBathroom());
+        instance.setValue(attributes.get(0), calcHouseSize(data));
+        instance.setValue(attributes.get(1), calcLotSize(data));
+        instance.setValue(attributes.get(2), calcBedrooms(data));
+        instance.setValue(attributes.get(3), calcGranite(data));
+        instance.setValue(attributes.get(4), calcNumberOfBathrooms(data));
 
         return instance;
     }
